@@ -108,11 +108,11 @@ class FileProcessor:
         try:
             objFile = open(file_name, 'w')
             for row in list_of_product_objects:
-                objFile.write(str(row[0] + ', ' + row[1]) + '\n')
+                objFile.write(str(row[0].strip() + ', ' + row[1]).strip() + '\n')
             objFile.close()
             status = True
         except Exception as e:
-            print("There is an error")
+            print("File not found. The file will be created for you")
             print(e, e.__doc__, type(e), sep='\n')
         return status
 
@@ -133,7 +133,7 @@ class FileProcessor:
                 list_of_product_objects.append(lstRow)
             objFile.close()
         except Exception as e:
-            print("There is an error")
+            print("File not found. Please select option 2, add a new product, price and select 3 to save data to file.")
             print(e, e.__doc__, type(e), sep='\n')
         return list_of_product_objects
 
@@ -209,7 +209,7 @@ class IO:
         print()
         print("******* The current inventory: *******")
         for row in list_of_product_objects:
-            print(row[0] + ', ' + row[1])
+            print(row[0] + ', ' + row[1].strip())
         print("*******************************************")
         print()
 
@@ -236,7 +236,7 @@ class IO:
 try:
     lstOfProductObjects = FileProcessor.read_data_from_file(strFileName, lstOfProductObjects)
 except FileNotFoundError:
-    IO.input_press_to_continue('File not found. Please select option 3 to save data and continue.')
+    IO.input_press_to_continue()
 
 # Step 7 Use of class: ----------------------------------------------------------------------------------------------- #
 while True:
